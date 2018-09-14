@@ -1,23 +1,22 @@
 document.addEventListener("DOMContentLoaded", (e) => {
-    let lat
-    let long
-  
-    //Grab user coordinates
-    axios.get(`https://ipinfo.io`)
-      .then((response) => {
-        let coords = response.data.loc.split(`,`)
-        lat = coords[0]
-        long = coords[1]
+  //Grab user coordinates
+  axios.get(`https://ipinfo.io`)
+    .then(x => getWeather(x))
+})
 
-        //API for JSON object containing user's local data
-        let api = `https://api.apixu.com/v1/current.json?key=e452323a9db841b187b164113180709&q=` + lat + `,` + long + ``
-  
-        axios.get(api)
-          .then(x => doThings(x))
-      })
-  })
+function getWeather(response) {
+  let coords = response.data.loc.split(`,`)
+  let lat = coords[0]
+  let long = coords[1]
 
-function doThings(response2) {
+  //API for JSON object containing user's local data
+  let api = `https://api.apixu.com/v1/current.json?key=e452323a9db841b187b164113180709&q=` + lat + `,` + long + ``
+
+  axios.get(api)
+    .then(x => updateUI(x))
+}
+
+function updateUI(response2) {
   let location = response2.data.location.name
   let state = response2.data.location.region
   let weather = response2.data.current.condition.text
