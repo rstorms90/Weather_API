@@ -19,28 +19,34 @@ function getWeather(response) {
 function updateUI(response2) {
   let location = response2.data.location.name
   let state = response2.data.location.region
+  let current = response2.data.current.condition.code
   let weather = response2.data.current.condition.text
-  let fahrenheit = Math.round(response2.data.current.temp_f)
-  let celcius = Math.round(response2.data.current.temp_c)
-  let degrees
+
+  let {
+    visMiles,
+    visKm,
+    windMph,
+    windKm,
+    windDir,
+    precipMm,
+    precipIn,
+    humidity
+  } = response2.data.current
+
   let moreLess = true
-  let windMph = response2.data.current.wind_mph
-  let windKm = response2.data.current.wind_kph
-  let windDir = response2.data.current.wind_dir
-  let precipMm = response2.data.current.precip_mm
-  let precipIn = response2.data.current.precip_in
-  let humidity = response2.data.current.humidity
+  let degrees = null
+
   let feelsLikeF = Math.round(response2.data.current.feelslike_f)
   let feelsLikeC = Math.round(response2.data.current.feelslike_c)
-  let visMiles = response2.data.current.vis_miles
-  let visKm = response2.data.current.vis_km
+  let fahrenheit = Math.round(response2.data.current.temp_f)
+  let celcius = Math.round(response2.data.current.temp_c)
+  
   let changeList = document.getElementById(`moreData`)
   let america = document.getElementsByClassName(`america`)
   let world = document.getElementsByClassName(`world`)
-  let current = response2.data.current.condition.code
   let weatherWords = weather.split(` `)
-  // let keywords
-  // let imageUrl
+
+
 
   // Toggle ºC & ºF
   function changeDegrees() {
@@ -61,6 +67,19 @@ function updateUI(response2) {
       world.classList.replace(`on`, `off`)
     }
   }
+
+
+                // APPEND TO MORE DATA BUTTON
+              //   <p class="world" id="windKm"></p>
+              //   <p class="world" id="precipMm"></p>
+              //   <p class="world" id="feelsLikeC"></p>
+              //   <p class="world" id="visKm"></p>
+              //   <p class="america" id="windMph"></p>
+              //   <p class="america" id="precipIn"></p>
+              //   <p class="america" id="feelsLikeF"></p>
+              //   <p class="america" id="visMiles"></p>
+              //   <p id="windDir"></p>
+              //   <p id="humidity"></p>
 
   // Toggle More & Less Data
   function changeMoreLess() {
