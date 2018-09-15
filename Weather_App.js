@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", (e) => {
   //Grab user coordinates
   axios.get(`https://ipinfo.io`)
-    .then(x => getWeather(x))
+    .then(e => getWeather(e))
 })
 
 function getWeather(response) {
@@ -13,7 +13,7 @@ function getWeather(response) {
   let api = `https://api.apixu.com/v1/current.json?key=e452323a9db841b187b164113180709&q=` + lat + `,` + long + ``
 
   axios.get(api)
-    .then(x => updateUI(x))
+    .then(e => updateUI(e))
 }
 
 function updateUI(response2) {
@@ -44,21 +44,32 @@ function updateUI(response2) {
   let weatherWords = weather.split(` `)
 
 
+  // Declare temp variables
+  
+  let degType = document.getElementById(`degType`)
+  let temp = document.getElementById(`temp`)
+  degType.innerText = `Show ºC`
+  temp.innerText = fahrenheit + `º`
   
 
-  // Use location to determine initial unit type
-  if (`United States of America`) {
-    degrees === false;
-    changeDegrees();
-  } else {
-    degrees === true;
-    changeDegrees();
-  }
+  // Toggle ºC & ºF
+  degType.addEventListener(`click`, function(e) {
+    if (degType.innerText === `Show ºF`) {
+      degType.innerText === `Show ºC`
+      temp.innerText = fahrenheit + `º`
+    } else {
+      degType.innerText = `Show ºF`
+      temp.innerText = celsius + `º`
+    }
+  })
+
+ 
+  
   
   // Display user's local temperature & conditions
-  location.innerHTML = location
-  moreLess.innerHTML = `More Data`
-  weather.innerHTML = weather
+  // location.innerHTML = location
+  // moreLess.innerHTML = `More Data`
+  // weather.innerHTML = weather
   // windMph.innerHTML = `Wind Speed: ` + windMph + ` Mph`
   // windKm.innerHTML = `Wind Speed: ` + windKm + ` Km/h`
   // windDir.innerHTML = `Wind Direction: ` + windDir
@@ -74,38 +85,6 @@ function updateUI(response2) {
 
 
 
-
-    // 'Click' functions for toggle buttons
-    let degType = document.getElementById(`degType`)
-    let temp = document.getElementById(`temp`)
-
-    // Toggle ºC & ºF
-    degType.addEventListener(`click`, function(e) {
-      e.preventDefault()
-      if (degType.innerText === `Show ºF`) {
-        degType.innerText = `Show ºC`
-        temp.innerText = fahrenheit + `º`
-      } else {
-        degType.innerText = `Show ºF`
-        temp.innerText = celsius + `º`
-      }
-    })
-
-  function changeDegrees() {
-    if (degrees === true) {
-      //World `OFF`
-      //America `ON`
-      document.getElementById(`degType`).innerText = `Show ºC`
-      document.getElementById(`temp`).innerText = fahrenheit + `º`
-
-    } else {
-      //World `ON`
-      //America `OFF`
-      document.getElementById(`degType`).innerText = `Show ºF`
-      document.getElementById(`temp`).innerText = celcius + `º`
-
-    }
-  }
 
 
     // Toggle More & Less Data
