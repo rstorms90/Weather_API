@@ -35,19 +35,13 @@ function updateUI(response2) {
 
   let feelsLikeF = Math.round(response2.data.current.feelslike_f)
   let feelsLikeC = Math.round(response2.data.current.feelslike_c)
-  let fahrenheit = Math.round(response2.data.current.temp_f)
-  let celsius = Math.round(response2.data.current.temp_c)
-  
-  let moreLess = true
-  let degrees = true
-  // let changeList = document.getElementById(`moreData`)
-  let weatherWords = weather.split(` `)
 
 
   // Declare temp variables
-  
   let degType = document.getElementById(`degType`)
   let temp = document.getElementById(`temp`)
+  let fahrenheit = Math.round(response2.data.current.temp_f)
+  let celsius = Math.round(response2.data.current.temp_c)
   degType.innerText = `Show ºC`
   temp.innerText = fahrenheit + `º`
   
@@ -55,7 +49,7 @@ function updateUI(response2) {
   // Toggle ºC & ºF
   degType.addEventListener(`click`, function(e) {
     if (degType.innerText === `Show ºF`) {
-      degType.innerText === `Show ºC`
+      degType.innerText = `Show ºC`
       temp.innerText = fahrenheit + `º`
     } else {
       degType.innerText = `Show ºF`
@@ -63,7 +57,24 @@ function updateUI(response2) {
     }
   })
 
+  // Declare More/Less Data variable
+  let changeList = document.getElementById(`moreLess`)
+  moreLess.innerText = `More Data`
+
+  // Toggle More/Less Data
+  moreLess.addEventListener(`click`, function(e) {
+    if (moreLess.innerText === `More Data`) {
+      moreLess.innerText = `Less Data`
+    } else {
+      moreLess.innerText = `More Data`
+    }
+  })
  
+  
+
+
+
+
   
   
   // Display user's local temperature & conditions
@@ -83,25 +94,6 @@ function updateUI(response2) {
 
 
 
-
-
-
-
-    // Toggle More & Less Data
-    // moreLess.addEventListener(`click`, function(e) {
-    //   e.preventDefault()
-    //   changeMoreLess()
-    // })
-
-  // function changeMoreLess() {
-  //   if (moreLess === true) {
-  //     moreLess.innerHTML = `More Data`
-  //     changeList.style.opacity = `0`
-  //   } else {
-  //     moreLess.innerHTML = `Less Data`
-  //     changeList.style.opacity = `1`
-  //   }
-  // }
           // APPEND TO MORE DATA BUTTON
         //   <p class="world" id="windKm"></p>
         //   <p class="world" id="precipMm"></p>
