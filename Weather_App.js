@@ -1,20 +1,35 @@
 document.addEventListener("DOMContentLoaded", (e) => {
+
   //Grab user coordinates
   axios.get(`https://ipinfo.io`)
-    .then(e => getWeather(e))
+    .then(e => getCurrentWeather(e))
 })
 
-function getWeather(response) {
+function getCurrentWeather(response) {
   let coords = response.data.loc.split(`,`)
   let lat = coords[0]
   let long = coords[1]
 
-  //API for JSON object containing user's local data
+  //API for JSON object containing user's current data
   let api = `https://api.apixu.com/v1/current.json?key=e452323a9db841b187b164113180709&q=` + lat + `,` + long + ``
 
   axios.get(api)
     .then(e => updateUI(e))
 }
+
+function getForecastWeather(response3) {
+
+  //API for JSON object containing user's forecast data
+  let api = `https://api.apixu.com/v1/forecast.json?key=e452323a9db841b187b164113180709&q=` + lat + `,` + long + ``
+
+  axios.get(api)
+    .then(e => forecastUI(e))
+}
+
+function forecastUI(response3) {
+
+}
+
 
 function updateUI(response2) {
   let location = response2.data.location.name
@@ -43,34 +58,36 @@ function updateUI(response2) {
   let fahrenheit = Math.round(response2.data.current.temp_f)
   let celsius = Math.round(response2.data.current.temp_c)
   degType.innerText = `Show ºC`
-  temp.innerText = fahrenheit + `º`
+  temp.innerText = fahrenheit + `ºF`
   
-
-  // Toggle ºC & ºF
+  // Toggle ºC & ºF (button)
   degType.addEventListener(`click`, function(e) {
     if (degType.innerText === `Show ºF`) {
       degType.innerText = `Show ºC`
-      temp.innerText = fahrenheit + `º`
+      temp.innerText = fahrenheit + `ºF`
     } else {
       degType.innerText = `Show ºF`
-      temp.innerText = celsius + `º`
+      temp.innerText = celsius + `ºC`
     }
   })
+
 
   // Declare More/Less Data variable
   let changeList = document.getElementById(`moreLess`)
   moreLess.innerText = `More Data`
 
-  // Toggle More/Less Data
+  // Toggle More/Less Data (button)
   moreLess.addEventListener(`click`, function(e) {
     if (moreLess.innerText === `More Data`) {
       moreLess.innerText = `Less Data`
     } else {
       moreLess.innerText = `More Data`
     }
-  })
- 
+  }) 
+
   
+
+
 
 
 
@@ -91,19 +108,5 @@ function updateUI(response2) {
   // feelsLikeC.innerHTML = `Feels Like: ` + feelsLikeC + `º`
   // visMiles.innerHTML = `Visibility: ` + visMiles + ` Mi`
   // visKm.innerHTML = `Visibility: ` + visKm + ` Km`
-
-
-
-          // APPEND TO MORE DATA BUTTON
-        //   <p class="world" id="windKm"></p>
-        //   <p class="world" id="precipMm"></p>
-        //   <p class="world" id="feelsLikeC"></p>
-        //   <p class="world" id="visKm"></p>
-        //   <p class="america" id="windMph"></p>
-        //   <p class="america" id="precipIn"></p>
-        //   <p class="america" id="feelsLikeF"></p>
-        //   <p class="america" id="visMiles"></p>
-        //   <p id="windDir"></p>
-        //   <p id="humidity"></p>
 
 }
