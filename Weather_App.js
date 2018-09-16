@@ -5,29 +5,18 @@ document.addEventListener("DOMContentLoaded", (e) => {
     .then(e => getCurrentWeather(e))
 })
 
+
 function getCurrentWeather(response) {
   let coords = response.data.loc.split(`,`)
   let lat = coords[0]
   let long = coords[1]
 
-  //API for JSON object containing user's current data
-  let api = `https://api.apixu.com/v1/current.json?key=e452323a9db841b187b164113180709&q=` + lat + `,` + long + ``
-
-  axios.get(api)
-    .then(e => updateUI(e))
-}
-
-function getForecastWeather(response3) {
-
-  //API for JSON object containing user's forecast data
+  //API for JSON object containing user's current weather data
+  //https://api.apixu.com/v1/current.json?key=e452323a9db841b187b164113180709&q=
   let api = `https://api.apixu.com/v1/forecast.json?key=e452323a9db841b187b164113180709&q=` + lat + `,` + long + ``
 
   axios.get(api)
-    .then(e => forecastUI(e))
-}
-
-function forecastUI(response3) {
-
+    .then(e => updateUI(e))
 }
 
 
@@ -36,6 +25,7 @@ function updateUI(response2) {
   let state = response2.data.location.region
   let current = response2.data.current.condition.code
   let weather = response2.data.current.condition.text
+  console.log(response2)
 
   let {
     visMiles,
