@@ -11,22 +11,61 @@ body {
   .container-fluid {
     padding: 2em;
   }
+
+  .search {
+    margin-top: 2em;
+  }
+
+  h2 {
+    font-size: 30px;
+  }
+
+  .location {
+    margin-top: 2em;
+    margin-bottom: -.9em;
+  }
   
+  hr {
+    border: 0; 
+    margin-top: 3%;
+    height: 1px;
+    width: 35%;
+    background-image: -webkit-linear-gradient(left, steelblue, white, steelblue);
+    background-image: -moz-linear-gradient(left, steelblue, white, steelblue);
+    background-image: -ms-linear-gradient(left, steelblue, white, steelblue);
+    background-image: -o-linear-gradient(left, steelblue, white, steelblue); 
+  }
+
+
+  .icons {
+    padding-top: 1em;
+    margin-right: -2em;
+  }
+
   .temps {
     justify-content: center;
   }
 
   .tempType {
-    margin-top: 1.8em;
+    margin-top: 1.4em;
     margin-left: -2.3em;
   }
 
-  .buttons {
+  .btn {
     color: rgba(255, 255, 255, 1);
     margin: -7px;
     margin-top: -13px;
     font-size: 25px;
     text-align: center;
+    outline: none;
+  }
+
+  .btn:hover {
+    color: white;
+  }
+
+  .divider {
+    font-size: 25px;
   }
 
   .currentTemp {
@@ -35,15 +74,17 @@ body {
     text-align: right;
   }
 
+  .forecast {
+    padding-left: 20%;
+    padding-right: 20%;
+    justify-content: center;
+  }
+
   .on {
     color: rgba(255, 255, 255, 1);
   }
 
   .off {
     color: rgba(255, 255, 255, .4);
-  }
-
-  .divider {
-    font-size: 25px;
   }
   
