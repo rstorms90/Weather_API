@@ -12,8 +12,7 @@ function getCurrentWeather(response) {
   let long = coords[1]
 
   //API for JSON object containing user's current weather data
-  //https://api.apixu.com/v1/current.json?key=e452323a9db841b187b164113180709&q=
-  let api = `https://api.apixu.com/v1/forecast.json?key=e452323a9db841b187b164113180709&q=` + lat + `,` + long + ``
+  let api = `https://api.apixu.com/v1/forecast.json?key=e452323a9db841b187b164113180709&q=` + lat + `,` + long + `&days=7`
 
   axios.get(api)
     .then(e => updateUI(e))
@@ -24,8 +23,7 @@ function updateUI(response2) {
   let location = response2.data.location.name
   let state = response2.data.location.region
   let current = response2.data.current.condition.code
-  let weather = response2.data.current.condition.text
-  console.log(response2)
+  let weatherCondition = response2.data.current.condition.text
 
   let {
     visMiles,
@@ -43,60 +41,33 @@ function updateUI(response2) {
 
 
   // Declare temp variables
-  let degType = document.getElementById(`degType`)
+  let degTypeF = document.getElementById(`degTypeF`)
+  let degTypeC = document.getElementById(`degTypeC`)
   let temp = document.getElementById(`temp`)
   let fahrenheit = Math.round(response2.data.current.temp_f)
   let celsius = Math.round(response2.data.current.temp_c)
-  degType.innerText = `Show ºC`
-  temp.innerText = fahrenheit + `ºF`
+  degTypeF.innerText = `ºF`
+  degTypeC.innerText = `ºC`
+
+
+
+  //Set default to fahrenheit, gray out celsius
+    temp.innerText = fahrenheit + `º`
+    degTypeF.classList.add(`on`)
+    degTypeC.classList.add(`off`)
   
+
   // Toggle ºC & ºF (button)
-  degType.addEventListener(`click`, function(e) {
-    if (degType.innerText === `Show ºF`) {
-      degType.innerText = `Show ºC`
-      temp.innerText = fahrenheit + `ºF`
-    } else {
-      degType.innerText = `Show ºF`
-      temp.innerText = celsius + `ºC`
-    }
+  degTypeF.addEventListener(`click`, function(e) {
+    temp.innerText = fahrenheit + `º`
+    degTypeF.classList.replace(`off`, `on`)
+    degTypeC.classList.replace(`on`, `off`)
   })
 
-
-  // Declare More/Less Data variable
-  let changeList = document.getElementById(`moreLess`)
-  moreLess.innerText = `More Data`
-
-  // Toggle More/Less Data (button)
-  moreLess.addEventListener(`click`, function(e) {
-    if (moreLess.innerText === `More Data`) {
-      moreLess.innerText = `Less Data`
-    } else {
-      moreLess.innerText = `More Data`
-    }
-  }) 
-
-  
-
-
-
-
-
-
-  
-  
-  // Display user's local temperature & conditions
-  // location.innerHTML = location
-  // moreLess.innerHTML = `More Data`
-  // weather.innerHTML = weather
-  // windMph.innerHTML = `Wind Speed: ` + windMph + ` Mph`
-  // windKm.innerHTML = `Wind Speed: ` + windKm + ` Km/h`
-  // windDir.innerHTML = `Wind Direction: ` + windDir
-  // precipMm.innerHTML = `Precipitation: ` + precipMm
-  // precipIn.innerHTML = `Precipitation: ` + precipIn
-  // humidity.innerHTML = `Humidity: ` + humidity
-  // feelsLikeF.innerHTML = `Feels Like: ` + feelsLikeF + `º`
-  // feelsLikeC.innerHTML = `Feels Like: ` + feelsLikeC + `º`
-  // visMiles.innerHTML = `Visibility: ` + visMiles + ` Mi`
-  // visKm.innerHTML = `Visibility: ` + visKm + ` Km`
+  degTypeC.addEventListener(`click`, function(e) {
+    temp.innerText = celsius + `º`
+    degTypeF.classList.replace(`on`, `off`)
+    degTypeC.classList.replace(`off`, `on`)
+  })
 
 }

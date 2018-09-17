@@ -1,36 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-        <link rel="stylesheet" href="Weather_App.css">
+        
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
+        <link rel="stylesheet" href="Weather_App.css">
         <title>Weather API</title>
-        
 </head>
 <body id="background">
+<div class="container-fluid">
+    <div class="row search">
+      <div class="col-12">
+        <search>
+          <form>
+            <input class='searchbar transparent' id='search' type='text' placeholder='enter city, country'/>
+            <input class='button transparent' id='button' type="submit" value='GO'/>
+          </form>
+        </search>
+      </div>
+    </div>
+    <div class="row temps">
+      <div class="col-2">
         <h1 id="location"></h1>
-        <p class="large" id="temp"></p>
-        <h2 id="weather"></h2>
-      
-        <div class="buttons bottom-space">
-          <a class="btn btn-default btn-sm" href="#" role="button" id="moreLess"></a>
-          <a class="btn btn-default btn-sm" href="#" role="button" id="degType"></a>
+        <p class="currentTemp" id="temp"></p>
+      </div>
+        <div class="col-2 tempType">
+          <a class="btn btn-default btn-sm buttons" href="#" role="button" id="degTypeF"></a>
+          <span class="divider off">|</span>
+          <a class="btn btn-default btn-sm buttons" href="#" role="button" id="degTypeC"></a>
         </div>
-        <div class="container">
-          <div id="moreData">
-                <!-- <p class="world" id="windKm"></p>
-                <p class="world" id="precipMm"></p>
-                <p class="world" id="feelsLikeC"></p>
-                <p class="world" id="visKm"></p>
-                <p class="america" id="windMph"></p>
-                <p class="america" id="precipIn"></p>
-                <p class="america" id="feelsLikeF"></p>
-                <p class="america" id="visMiles"></p>
-                <p id="windDir"></p>
-                <p id="humidity"></p> -->
-          </div>
-        </div>
+    </div>
+</div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
         <script src="Weather_App.js"></script>
-    </body>
+</body>
 </html>
