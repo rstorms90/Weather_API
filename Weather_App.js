@@ -61,7 +61,6 @@ function updateUI(response2) {
     forecastRow.appendChild(day)
   }
 
-  
 
   // Declare temp variables
   let degTypeF = document.getElementById(`degTypeF`)
