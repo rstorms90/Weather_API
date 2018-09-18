@@ -26,6 +26,7 @@ body {
     margin-top: 2em;
     margin-bottom: -.9em;
     margin-right: 10%;
+    letter-spacing: .1em;
   }
   
   hr {
@@ -69,6 +70,10 @@ body {
     color: white;
   }
 
+  .btn:focus {
+    outline: 0;
+  }
+
   .divider {
     font-size: 25px;
   }
@@ -83,22 +88,60 @@ body {
     margin-right: -2em;
   }
 
+  .today {
+    font-size: 20px;
+    margin-right: 30%;
+  }
+
+  .condition {
+    font-size: 15px;
+    font-weight: lighter;
+    margin-left: 11%;
+  }
+
+  .wind {
+    font-size: 15px;
+    font-weight: lighter;
+    margin-left: 15%;
+  }
+
+  .windDirection {
+    font-size: 15px;
+    font-weight: lighter;
+    margin-left: 24%;
+  }
+
+  .humidity {
+    font-size: 15px;
+    font-weight: lighter;
+    margin-left: 17%;
+  }
+
   .forecast {
+    margin-top: 1em;
     padding-left: 35%;
     padding-right: 20%;
     justify-content: center;
+    font-weight: lighter; 
+    font-style: italic;
+    font-size: 18px;
   }
 
-  .high {
+  .highrow {
     padding-left: 35%;
     padding-right: 20%;
     justify-content: center;
+    font-weight: bold;
+    font-size: 23px;
   }
 
-  .low {
+  .lowrow {
     padding-left: 35%;
     padding-right: 20%;
     justify-content: center;
+    font-weight: lighter;
+    font-size: 20px;
+    color: rgba(255, 255, 255, .7);
   }
 
   .on {

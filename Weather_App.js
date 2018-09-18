@@ -23,24 +23,14 @@ function updateUI(response2) {
   let curLocation = response2.data.location.name
   let country = response2.data.location.country
   let weatherCondition = response2.data.current.condition.text
-  let {
-    windMph,
-    windKm,
-    windDir,
-    humidity
-  } = response2.data.current
+  let windMph = response2.data.current.wind_mph
+  let windKm = response2.data.current.wind_kph
+  let windDir = response2.data.current.wind_dir
+  let humidity = response2.data.current.humidity
 
   let feelsLikeF = Math.round(response2.data.current.feelslike_f)
   let feelsLikeC = Math.round(response2.data.current.feelslike_c)
 
-
-
-  //Append current location
-  let location = document.getElementById(`location`)
-  if (country = `United States of America`) {
-    country = `US`
-  }
-  location.innerText = curLocation + `, ` + country
 
 
   // Declare temp variables
@@ -52,7 +42,22 @@ function updateUI(response2) {
   degTypeF.innerText = `ºF`
   degTypeC.innerText = `ºC`
 
+  //Append current location
+  let location = document.getElementById(`location`)
+  if (country = `United States of America`) {
+    country = `US`
+    //Set default to fahrenheit, gray out celsius
+    temp.innerText = fahrenheit + `º`
+    degTypeF.classList.add(`on`)
+    degTypeC.classList.add(`off`)
+  } else {
+    temp.innerText = celsius + `º`
+    degTypeF.classList.add(`off`)
+    degTypeC.classList.add(`on`)
+  }
+  location.innerText = curLocation + `, ` + country
 
+  
 
   //Change dates to corresponding days
   let daysOfWeek = [`Mon`, `Tue`, `Wed`, `Thu`, `Fri`, `Sat`, `Sun`]
@@ -61,8 +66,9 @@ function updateUI(response2) {
   let forecastRow = document.getElementById(`forecast`)
   let forecastCol = document.getElementById(`col`)
   let forecast = response2.data.forecast.forecastday.slice(1)
-  let high = document.getElementById(`high`)
-  let low = document.getElementById(`low`)
+  let highRow = document.getElementById(`highRow`)
+  let lowRow = document.getElementById(`lowRow`)
+
 
   //Loop through forecast days and set to bottom
   for (let i = 0; i < forecast.length; i++) {
@@ -85,51 +91,79 @@ function updateUI(response2) {
 
     //Forecast high temps
     hiTemps.setAttribute(`class`, `col-md-2`)
-    high.appendChild(hiTemps)
+    highRow.appendChild(hiTemps)
     hiTemps.innerText = maxF
 
     //Forecast low temps
     lowTemps.setAttribute(`class`, `col-md-2`)
-    low.appendChild(lowTemps)
+    lowRow.appendChild(lowTemps)
     lowTemps.innerText = minF
+
+
+    // Toggle ºC & ºF (buttons)
+    degTypeF.addEventListener(`click`, function(e) {
+      temp.innerText = fahrenheit + `º`
+      degTypeF.classList.replace(`off`, `on`)
+      degTypeC.classList.replace(`on`, `off`)
+      hiTemps.innerText = maxF
+      lowTemps.innerText = minF
+    })
+
+    degTypeC.addEventListener(`click`, function(e) {
+      temp.innerText = celsius + `º`
+      degTypeF.classList.replace(`on`, `off`)
+      degTypeC.classList.replace(`off`, `on`)
+      hiTemps.innerText = maxC
+      lowTemps.innerText = minC
+    })
   }
+  
 
-  //Set default to fahrenheit, gray out celsius
-  temp.innerText = fahrenheit + `º`
-  degTypeF.classList.add(`on`)
-  degTypeC.classList.add(`off`)
+  //Append conditions
+
+  let conditions = document.getElementById(`conditions`)
+  let todaysDate = response2.data.forecast.forecastday[0].date
+
+  //Current Day
+  let today = new Date(todaysDate)
+  let todaysName = today.getDay()
+  let todayBlock = document.createElement(`div`)
+  todayBlock.classList.add(`today`)
+  conditions.appendChild(todayBlock)
+  todayBlock.innerText = daysOfWeek[todaysName]
+
+  //Current Condition
+  let currentCondition = document.createElement(`div`)
+  currentCondition.classList.add(`condition`)
+  conditions.appendChild(currentCondition)
+  currentCondition.innerText = weatherCondition
+
+  //Current Wind
+  let winds = document.createElement(`div`)
+  winds.classList.add(`wind`)
+  conditions.appendChild(winds)
+  winds.innerText = `Wind: ` + windMph + ` Mph`
+
+  //Wind Direction
+  let windDirection = document.createElement(`div`)
+  windDirection.classList.add(`windDirection`)
+  conditions.appendChild(windDirection)
+  windDirection.innerText = `Wind Direction: ` + windDir
+
+  //Humidity
+  let humid = document.createElement(`div`)
+  humid.classList.add(`humidity`)
+  conditions.appendChild(humid)
+  humid.innerText = `Humidity: ` + humidity + `%`
 
 
-  // Toggle ºC & ºF (buttons)
-  degTypeF.addEventListener(`click`, function(e) {
-    temp.innerText = fahrenheit + `º`
-    degTypeF.classList.replace(`off`, `on`)
-    degTypeC.classList.replace(`on`, `off`)
-
-  })
-
-  degTypeC.addEventListener(`click`, function(e) {
-    temp.innerText = celsius + `º`
-    degTypeF.classList.replace(`on`, `off`)
-    degTypeC.classList.replace(`off`, `on`)
-  })
-
-
-
+  //Changing weather pictures
 
 
   //API call for value of search bar (city, country)
 
-  //Changing weather pictures
-
   //Changing weather color background
 
-  //Append conditions
-    //Day TIME
-    //Condition
-      
-    //Wind
-    //Humidity
 
 
 }
