@@ -12,9 +12,25 @@ body {
     padding: 2em;
   }
 
-  .search {
+  .searchbar {
     margin-top: 2em;
     border: none;
+    width: 40%;
+    border-bottom: 1px white solid;
+    background: transparent;
+  }
+
+  ::placeholder {
+    color: white;
+    opacity: .7;
+    padding-left: 10%;
+}
+
+  .go {
+    margin-top: 2em;
+    color: white;
+    border: none;
+    cursor: pointer;
     background: transparent;
   }
 
@@ -108,7 +124,7 @@ body {
   .windDirection {
     font-size: 15px;
     font-weight: lighter;
-    margin-left: 24%;
+    margin-left: 28%;
   }
 
   .humidity {

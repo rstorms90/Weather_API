@@ -117,7 +117,7 @@ function updateUI(response2) {
       lowTemps.innerText = minC
     })
   }
-  
+
 
   //Append conditions
 
@@ -157,12 +157,27 @@ function updateUI(response2) {
   humid.innerText = `Humidity: ` + humidity + `%`
 
 
+  //Changing weather color background
+  let body = document.getElementById(`background`)
+  if (temp >= `80º`) {
+    body.style.backgroundColor = `#800000`
+  } else if (temp < `80º`) {
+    body.style.backgroundColor = `#ffcc00`
+  } else if (temp <= `70º`) {
+    body.style.backgroundColor = `#5a97f2`
+  } else if (temp < `60º`)
+    body.style.backgroundColor = `#0D47A1`
+
+
+
+
   //Changing weather pictures
+  let iconsPH = document.getElementById(`icons`)
+  iconsPH.setAttribute(`src`, icon)
+
 
 
   //API call for value of search bar (city, country)
-
-  //Changing weather color background
 
 
 
