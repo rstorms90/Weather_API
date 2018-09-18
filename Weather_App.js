@@ -44,7 +44,7 @@ function updateUI(response2) {
 
   //Append current location
   let location = document.getElementById(`location`)
-  if (country = `United States of America`) {
+  if (country === `United States of America`) {
     country = `US`
     //Set default to fahrenheit, gray out celsius
     temp.innerText = fahrenheit + `º`
@@ -158,23 +158,28 @@ function updateUI(response2) {
 
 
   //Changing weather color background
+  let hr = document.getElementById(`hr`)
   let body = document.getElementById(`background`)
   if (temp >= `80º`) {
     body.style.backgroundColor = `#800000`
+    hr.style.backgroundImage = `-webkit-linear-gradient(left, #800000, white, #800000)`
   } else if (temp < `80º`) {
     body.style.backgroundColor = `#ffcc00`
+    hr.style.backgroundImage = `-webkit-linear-gradient(left, #ffcc00, white, #ffcc00)`
   } else if (temp <= `70º`) {
     body.style.backgroundColor = `#5a97f2`
-  } else if (temp < `60º`)
+    hr.style.backgroundImage = `-webkit-linear-gradient(left, #5a97f2, white, #5a97f2)`
+  } else if (temp < `60º`) {
     body.style.backgroundColor = `#0D47A1`
-
-
+    hr.style.backgroundImage = `-webkit-linear-gradient(left, #0D47A1, white, #0D47A1)`
+  }
+  
 
 
   //Changing weather pictures
-  let iconsPH = document.getElementById(`icons`)
-  iconsPH.setAttribute(`src`, icon)
-
+  // let icon = response2.data.current.condition.icon
+  // let iconsPH = document.getElementById(`icons`)
+  // iconsPH.setAttribute(`src`, icon)
 
 
   //API call for value of search bar (city, country)
