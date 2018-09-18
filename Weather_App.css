@@ -89,6 +89,18 @@ body {
     justify-content: center;
   }
 
+  .high {
+    padding-left: 35%;
+    padding-right: 20%;
+    justify-content: center;
+  }
+
+  .low {
+    padding-left: 35%;
+    padding-right: 20%;
+    justify-content: center;
+  }
+
   .on {
     color: rgba(255, 255, 255, 1);
   }
