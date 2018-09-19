@@ -77,6 +77,10 @@ body {
     margin-right: -2.3em;
   }
 
+  .tempType a {
+    color: rgba(255, 255, 255, .4);
+  }
+
   .btn {
     color: rgba(255, 255, 255, 1);
     margin: -7px;
@@ -164,11 +168,6 @@ body {
     color: rgba(255, 255, 255, .7);
   }
 
-  .on {
+  .tempType a.focus-tempType {
     color: rgba(255, 255, 255, 1);
   }
-
-  .off {
-    color: rgba(255, 255, 255, .4);
-  }
-  

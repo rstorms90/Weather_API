@@ -1,6 +1,16 @@
 document.addEventListener("DOMContentLoaded", (e) => {
   getLocalWeather()
 
+  let maxF
+  let minF
+  let maxC
+  let minC
+  let fahrenheit
+  let celsius
+  let degTypeF = document.getElementById(`degTypeF`)
+  let degTypeC = document.getElementById(`degTypeC`)
+  let temp = document.getElementById(`temp`)
+
   //Declare to search for cities
   let form = document.getElementById(`search`)
 
@@ -23,16 +33,51 @@ document.addEventListener("DOMContentLoaded", (e) => {
   function getLocalWeather() {
     //Grab user coordinates
     axios.get(`https://ipinfo.io`)
-      .then(e => {let coords = e.data.loc.split(`,`)
-      let lat = coords[0]
-      let long = coords[1]
-  
-      //API for JSON object containing user's current weather data
-      let api = `https://api.apixu.com/v1/forecast.json?key=e452323a9db841b187b164113180709&q=` + lat + `,` + long + `&days=7`
-  
-      axios.get(api)
-        .then(e => updateUI(e))})
+      .then(e => {
+        let coords = e.data.loc.split(`,`)
+        let lat = coords[0]
+        let long = coords[1]
+
+        //API for JSON object containing user's current weather data
+        let api = `https://api.apixu.com/v1/forecast.json?key=e452323a9db841b187b164113180709&q=` + lat + `,` + long + `&days=7`
+
+        axios.get(api)
+          .then(e => updateUI(e))
+      })
   }
+
+  // Toggle ºC & ºF (buttons)
+  degTypeF.addEventListener(`click`, function (e) {
+    temp.innerText = fahrenheit + `º`
+    degTypeF.classList.add('focus-tempType')
+    degTypeC.classList.remove('focus-tempType')
+
+    let tempElements = document.getElementsByClassName('hi-temps')
+    for(let i=0; i<tempElements.length; i++) {
+      tempElements[i].innerText = maxF[i]
+    }
+
+    tempElements = document.getElementsByClassName('low-temps')
+    for(let i=0; i<tempElements.length; i++) {
+      tempElements[i].innerText = minF[i]
+    }
+  })
+
+  degTypeC.addEventListener(`click`, function (e) {
+    temp.innerText = celsius + `º`
+    degTypeC.classList.add('focus-tempType')
+    degTypeF.classList.remove('focus-tempType')
+
+    let tempElements = document.getElementsByClassName('hi-temps')
+    for(let i=0; i<tempElements.length; i++) {
+      tempElements[i].innerText = maxC[i]
+    }
+
+    tempElements = document.getElementsByClassName('low-temps')
+    for(let i=0; i<tempElements.length; i++) {
+      tempElements[i].innerText = minC[i]
+    }
+  })
 
   function removeElementsChildren(id) {
     let element = document.getElementById(id)
@@ -61,11 +106,8 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
 
     // Declare temp variables
-    let degTypeF = document.getElementById(`degTypeF`)
-    let degTypeC = document.getElementById(`degTypeC`)
-    let temp = document.getElementById(`temp`)
-    let fahrenheit = Math.round(response2.data.current.temp_f)
-    let celsius = Math.round(response2.data.current.temp_c)
+    fahrenheit = Math.round(response2.data.current.temp_f)
+    celsius = Math.round(response2.data.current.temp_c)
     degTypeF.innerText = `ºF`
     degTypeC.innerText = `ºC`
 
@@ -76,12 +118,12 @@ document.addEventListener("DOMContentLoaded", (e) => {
       country = `US`
       //Set default to fahrenheit, gray out celsius
       temp.innerText = fahrenheit + `º`
-      degTypeF.classList.add(`on`)
-      degTypeC.classList.add(`off`)
+      degTypeF.classList.add('focus-tempType')
+      degTypeC.classList.remove('focus-tempType')
     } else {
       temp.innerText = celsius + `º`
-      degTypeF.classList.replace(`on`, `off`)
-      degTypeC.classList.replace(`off`, `on`)
+      degTypeF.classList.remove('focus-tempType')
+      degTypeC.classList.add('focus-tempType')
     }
     location.innerText = curLocation + `, ` + country
 
@@ -97,6 +139,12 @@ document.addEventListener("DOMContentLoaded", (e) => {
     let highRow = document.getElementById(`highRow`)
     let lowRow = document.getElementById(`lowRow`)
 
+    // Clear out min/maxes
+    maxF = []
+    minF = []
+    maxC = []
+    minC = []
+
 
     //Loop through forecast days and set to bottom 
     for (let i = 0; i < forecast.length; i++) {
@@ -109,51 +157,33 @@ document.addEventListener("DOMContentLoaded", (e) => {
       day.innerText = daysOfWeek[dayName]
 
       //Set highs and lows for each forecast
-      let maxF = Math.round(forecast[i].day.maxtemp_f)
-      let minF = Math.round(forecast[i].day.mintemp_f)
-      let maxC = Math.round(forecast[i].day.maxtemp_c)
-      let minC = Math.round(forecast[i].day.mintemp_c)
+      maxF.push(Math.round(forecast[i].day.maxtemp_f))
+      minF.push(Math.round(forecast[i].day.mintemp_f))
+      maxC.push(Math.round(forecast[i].day.maxtemp_c))
+      minC.push(Math.round(forecast[i].day.mintemp_c))
 
-      let hiTemps = document.createElement(`div`)
-      let lowTemps = document.createElement(`div`)
+      let hiTemp = document.createElement(`div`)
+      let lowTemp = document.createElement(`div`)
 
       //Forecast high temps
-      hiTemps.setAttribute(`class`, `col-md-2`)
-      highRow.appendChild(hiTemps)
+      hiTemp.setAttribute(`class`, `col-md-2 hi-temps`)
       if (country === `US`) {
-        hiTemps.innerText = maxF
+        hiTemp.innerText = maxF[i]
       } else {
-        hiTemps.innerText = maxC
+        hiTemp.innerText = maxC[i]
       }
-      
+      highRow.appendChild(hiTemp)
+
 
       //Forecast low temps
-      lowTemps.setAttribute(`class`, `col-md-2`)
-      lowRow.appendChild(lowTemps)
+      lowTemp.setAttribute(`class`, `col-md-2 low-temps`)
       if (country === `US`) {
-        lowTemps.innerText = minF
+        lowTemp.innerText = minF[i]
       } else {
-        lowTemps.innerText = minC
+        lowTemp.innerText = minC[i]
       }
+      lowRow.appendChild(lowTemp)
 
-
-      // Toggle ºC & ºF (buttons)
-      degTypeF.addEventListener(`click`, function (e) {
-        temp.innerText = fahrenheit + `º`
-        degTypeF.classList.replace(`off`, `on`)
-        degTypeC.classList.replace(`on`, `off`)
-        hiTemps.innerText = maxF
-        lowTemps.innerText = minF
-
-      })
-
-      degTypeC.addEventListener(`click`, function (e) {
-        temp.innerText = celsius + `º`
-        degTypeF.classList.replace(`on`, `off`)
-        degTypeC.classList.replace(`off`, `on`)
-        hiTemps.innerText = maxC
-        lowTemps.innerText = minC
-      })
     }
 
 
@@ -196,8 +226,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
     iconsPH.setAttribute(`src`, icon)
 
 
-
-    //changing back to US breaks toggle switch
     //color backgrounds not working on celsius
 
     //local storage
