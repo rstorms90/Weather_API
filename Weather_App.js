@@ -1,9 +1,5 @@
 document.addEventListener("DOMContentLoaded", (e) => {
-
-  //Grab user coordinates
-  axios.get(`https://ipinfo.io`)
-    .then(e => getCurrentWeather(e))
-
+  getLocalWeather()
 
   //Declare to search for cities
   let form = document.getElementById(`search`)
@@ -13,26 +9,28 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
   function submitEvent(event) {
     let searchbar = document.getElementById(`searchbar`).value
+    event.preventDefault()
     getCall(searchbar)
   }
 
   function getCall(location) {
-    axios.get(`https://api.apixu.com/v1/forecast.json?key=e452323a9db841b187b164113180709&q=${location}`)
+    axios.get(`https://api.apixu.com/v1/forecast.json?key=e452323a9db841b187b164113180709&q=${location}&days=7`)
       .then((response) => updateUI(response))
   }
 
 
-
-  function getCurrentWeather(response) {
-    let coords = response.data.loc.split(`,`)
-    let lat = coords[0]
-    let long = coords[1]
-
-    //API for JSON object containing user's current weather data
-    let api = `https://api.apixu.com/v1/forecast.json?key=e452323a9db841b187b164113180709&q=` + lat + `,` + long + `&days=7`
-
-    axios.get(api)
-      .then(e => updateUI(e))
+  function getLocalWeather() {
+    //Grab user coordinates
+    axios.get(`https://ipinfo.io`)
+      .then(e => {let coords = e.data.loc.split(`,`)
+      let lat = coords[0]
+      let long = coords[1]
+  
+      //API for JSON object containing user's current weather data
+      let api = `https://api.apixu.com/v1/forecast.json?key=e452323a9db841b187b164113180709&q=` + lat + `,` + long + `&days=7`
+  
+      axios.get(api)
+        .then(e => updateUI(e))})
   }
 
   function removeElementsChildren(id) {
@@ -43,6 +41,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   }
 
   function updateUI(response2) {
+    console.log(response2)
     removeElementsChildren(`conditions`)
     removeElementsChildren(`forecast`)
     removeElementsChildren(`highRow`)
@@ -97,8 +96,8 @@ document.addEventListener("DOMContentLoaded", (e) => {
     let lowRow = document.getElementById(`lowRow`)
 
 
-    //Loop through forecast days and set to bottom
-    
+    //Loop through forecast days and set to bottom 
+
     for (let i = 0; i < forecast.length; i++) {
       let date = forecast[i].date
       let day = document.createElement(`div`)
@@ -160,7 +159,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     <div class="windDirection">Wind Direction: ${windDir}</div>
     <div class="humidity">Humidity: ${humidity}%</div>`
 
-    
+
     // Changing weather color background (FIX THIS - Gradient as background)
     let hr = document.getElementsByClassName(`hr`)[0]
     let body = document.getElementById(`background`)
@@ -180,9 +179,9 @@ document.addEventListener("DOMContentLoaded", (e) => {
     }
 
     //Changing weather pictures
-    // let icon = response2.data.current.condition.icon
-    // let iconsPH = document.getElementById(`icons`)
-    // iconsPH.setAttribute(`src`, icon)
+    let icon = response2.data.current.condition.icon
+    let iconsPH = document.getElementById(`icons`)
+    iconsPH.setAttribute(`src`, icon)
 
 
     //API call for value of search bar (city, country)
