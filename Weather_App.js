@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     getCall(searchbar)
   }
 
+  //API call for any city
   function getCall(location) {
     axios.get(`https://api.apixu.com/v1/forecast.json?key=e452323a9db841b187b164113180709&q=${location}&days=7`)
       .then((response) => updateUI(response))
@@ -68,6 +69,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     degTypeF.innerText = `ºF`
     degTypeC.innerText = `ºC`
 
+
     //Append current location
     let location = document.getElementById(`location`)
     if (country === `United States of America`) {
@@ -78,8 +80,8 @@ document.addEventListener("DOMContentLoaded", (e) => {
       degTypeC.classList.add(`off`)
     } else {
       temp.innerText = celsius + `º`
-      degTypeF.classList.add(`off`)
-      degTypeC.classList.add(`on`)
+      degTypeF.classList.replace(`on`, `off`)
+      degTypeC.classList.replace(`off`, `on`)
     }
     location.innerText = curLocation + `, ` + country
 
@@ -119,12 +121,21 @@ document.addEventListener("DOMContentLoaded", (e) => {
       //Forecast high temps
       hiTemps.setAttribute(`class`, `col-md-2`)
       highRow.appendChild(hiTemps)
-      hiTemps.innerText = maxF
+      if (country === `United States of America`) {
+        hiTemps.innerText = maxF
+      } else {
+        hiTemps.innerText = maxC
+      }
+      
 
       //Forecast low temps
       lowTemps.setAttribute(`class`, `col-md-2`)
       lowRow.appendChild(lowTemps)
-      lowTemps.innerText = minF
+      if (country === `United States of America`) {
+        lowTemps.innerText = minF
+      } else {
+        lowTemps.innerText = minC
+      }
 
 
       // Toggle ºC & ºF (buttons)
@@ -134,6 +145,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
         degTypeC.classList.replace(`on`, `off`)
         hiTemps.innerText = maxF
         lowTemps.innerText = minF
+
       })
 
       degTypeC.addEventListener(`click`, function (e) {
@@ -163,6 +175,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     // Changing weather color background (FIX THIS - Gradient as background)
     let hr = document.getElementsByClassName(`hr`)[0]
     let body = document.getElementById(`background`)
+
     let tempValue = parseInt(temp.innerHTML, 10)
     if (tempValue >= 80) {
       body.style.backgroundImage = `-webkit-linear-gradient(left, #e58d1b, #800000)`
@@ -183,8 +196,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
     let iconsPH = document.getElementById(`icons`)
     iconsPH.setAttribute(`src`, icon)
 
-
-    //API call for value of search bar (city, country)
 
     //local storage
 
