@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   }
 
   function updateUI(response2) {
-    console.log(response2)
+
     removeElementsChildren(`conditions`)
     removeElementsChildren(`forecast`)
     removeElementsChildren(`highRow`)
@@ -99,7 +99,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
 
     //Loop through forecast days and set to bottom 
-
     for (let i = 0; i < forecast.length; i++) {
       let date = forecast[i].date
       let day = document.createElement(`div`)
@@ -121,7 +120,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
       //Forecast high temps
       hiTemps.setAttribute(`class`, `col-md-2`)
       highRow.appendChild(hiTemps)
-      if (country === `United States of America`) {
+      if (country === `US`) {
         hiTemps.innerText = maxF
       } else {
         hiTemps.innerText = maxC
@@ -131,7 +130,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
       //Forecast low temps
       lowTemps.setAttribute(`class`, `col-md-2`)
       lowRow.appendChild(lowTemps)
-      if (country === `United States of America`) {
+      if (country === `US`) {
         lowTemps.innerText = minF
       } else {
         lowTemps.innerText = minC
@@ -196,6 +195,10 @@ document.addEventListener("DOMContentLoaded", (e) => {
     let iconsPH = document.getElementById(`icons`)
     iconsPH.setAttribute(`src`, icon)
 
+
+
+    //changing back to US breaks toggle switch
+    //color backgrounds not working on celsius
 
     //local storage
 

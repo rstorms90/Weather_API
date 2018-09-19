@@ -57,10 +57,14 @@ body {
     background-image: -o-linear-gradient(left, steelblue, white, steelblue); 
   }
 
-  .icons {
-    padding-top: 1em;
+  .iconsDiv {
     padding-left: 7%;
     margin-right: -2em;
+  }
+
+  .icon {
+    height: 80px;
+    width: 80px;
   }
 
   .temps {
