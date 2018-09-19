@@ -49,15 +49,15 @@ document.addEventListener("DOMContentLoaded", (e) => {
   // Toggle ºC & ºF (buttons)
   degTypeF.addEventListener(`click`, function (e) {
     temp.innerText = fahrenheit + `º`
-    degTypeF.classList.add('focus-tempType')
-    degTypeC.classList.remove('focus-tempType')
+    degTypeF.classList.add(`focus-tempType`)
+    degTypeC.classList.remove(`focus-tempType`)
 
-    let tempElements = document.getElementsByClassName('hi-temps')
+    let tempElements = document.getElementsByClassName(`hi-temps`)
     for(let i=0; i<tempElements.length; i++) {
       tempElements[i].innerText = maxF[i]
     }
 
-    tempElements = document.getElementsByClassName('low-temps')
+    tempElements = document.getElementsByClassName(`low-temps`)
     for(let i=0; i<tempElements.length; i++) {
       tempElements[i].innerText = minF[i]
     }
@@ -65,15 +65,15 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
   degTypeC.addEventListener(`click`, function (e) {
     temp.innerText = celsius + `º`
-    degTypeC.classList.add('focus-tempType')
-    degTypeF.classList.remove('focus-tempType')
+    degTypeC.classList.add(`focus-tempType`)
+    degTypeF.classList.remove(`focus-tempType`)
 
-    let tempElements = document.getElementsByClassName('hi-temps')
+    let tempElements = document.getElementsByClassName(`hi-temps`)
     for(let i=0; i<tempElements.length; i++) {
       tempElements[i].innerText = maxC[i]
     }
 
-    tempElements = document.getElementsByClassName('low-temps')
+    tempElements = document.getElementsByClassName(`low-temps`)
     for(let i=0; i<tempElements.length; i++) {
       tempElements[i].innerText = minC[i]
     }
@@ -118,12 +118,12 @@ document.addEventListener("DOMContentLoaded", (e) => {
       country = `US`
       //Set default to fahrenheit, gray out celsius
       temp.innerText = fahrenheit + `º`
-      degTypeF.classList.add('focus-tempType')
-      degTypeC.classList.remove('focus-tempType')
+      degTypeF.classList.add(`focus-tempType`)
+      degTypeC.classList.remove(`focus-tempType`)
     } else {
       temp.innerText = celsius + `º`
-      degTypeF.classList.remove('focus-tempType')
-      degTypeC.classList.add('focus-tempType')
+      degTypeF.classList.remove(`focus-tempType`)
+      degTypeC.classList.add(`focus-tempType`)
     }
     location.innerText = curLocation + `, ` + country
 
@@ -210,8 +210,8 @@ document.addEventListener("DOMContentLoaded", (e) => {
       body.style.backgroundImage = `-webkit-linear-gradient(left, #e58d1b, #800000)`
       hr.style.backgroundImage = `-webkit-linear-gradient(left, #e58d1b, white, #800000)`
     } else if (tempValue >= 70) {
-      body.style.backgroundImage = `-webkit-linear-gradient(left, #f9c920, #e58d1b)`
-      hr.style.backgroundImage = `-webkit-linear-gradient(left, #f9c920, white, #e58d1b)`
+      body.style.backgroundImage = `-webkit-linear-gradient(left, #f7e00e, #e58d1b)`
+      hr.style.backgroundImage = `-webkit-linear-gradient(left, #f7e00e, white, #e58d1b)`
     } else if (tempValue >= 60) {
       body.style.backgroundImage = `-webkit-linear-gradient(left, #0D47A1, #5a97f2)`
       hr.style.backgroundImage = `-webkit-linear-gradient(left, #5a97f2, white, #5a97f2)`
@@ -232,7 +232,5 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
     //tests
 
-
   }
-
 })
