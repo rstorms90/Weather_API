@@ -8,14 +8,23 @@ document.addEventListener("DOMContentLoaded", (e) => {
     
 
     for (let i = 0; i < favorites.length; i++) {
-      let option = `<a class="dropdown-item" href="#" id="${favorites[i]}"><i class="fas fa-trash" aria-hidden="true"></i>${favorites[i]}</a>`
+      let option = `<a class="dropdown-item" href="#" id="${favorites[i]}"><i class="fas fa-trash delete" aria-hidden="true"></i>${favorites[i]}</a>`
       dropdown.innerHTML += option
     }
   }
 
   dropdown.addEventListener(`click`, (event) => {
-  document.getElementById(`searchbar`).value = ``
-  getCall(event.target.text)
+    document.getElementById(`searchbar`).value = ``
+    if (event.target.classList.contains(`delete`)) {
+      let arrOfCities = JSON.parse(localStorage.getItem(`favoriteCities`))
+      let deleteInd = arrOfCities.indexOf(event.target.parentNode.id)
+      let slicedCity = arrOfCities.splice(deleteInd, 0)
+      localStorage.setItem(`favoriteCities`, JSON.stringify(slicedCity))
+
+      dropdown.removeChild(event.target.parentNode)
+    } else {
+      getCall(event.target.text)
+    }
   })
 
   getLocalWeather()
@@ -70,7 +79,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     option.classList.add(`dropdown-item`)
     
     for (let i = 0; i < favorites.length; i++) {
-      option.innerHTML = `<i class="fas fa-trash" aria-hidden="true"></i> ${favorites[i]}`
+      option.innerHTML = `<i class="fas fa-trash delete" aria-hidden="true"></i> ${favorites[i]}`
     }
   })
 
