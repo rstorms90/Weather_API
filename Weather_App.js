@@ -1,4 +1,23 @@
 document.addEventListener("DOMContentLoaded", (e) => {
+
+  let searchbar = document.getElementById(`searchbar`)
+  let dropdown = document.getElementById(`dropdown`)
+
+  if (localStorage.getItem(`favoriteCities`)){
+    let favorites = JSON.parse(localStorage.getItem(`favoriteCities`))
+    
+
+    for (let i = 0; i < favorites.length; i++) {
+      let option = `<a class="dropdown-item" href="#" id="${favorites[i]}"><i class="fas fa-trash" aria-hidden="true"></i>${favorites[i]}</a>`
+      dropdown.innerHTML += option
+    }
+  }
+
+  dropdown.addEventListener(`click`, (event) => {
+  document.getElementById(`searchbar`).value = ``
+  getCall(event.target.text)
+  })
+
   getLocalWeather()
 
   let maxF
@@ -10,7 +29,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   let degTypeF = document.getElementById(`degTypeF`)
   let degTypeC = document.getElementById(`degTypeC`)
   let temp = document.getElementById(`temp`)
-  let searchbar
+  
 
   //Declare to search for cities
   let form = document.getElementById(`search`)
@@ -26,31 +45,44 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
 
   //Local storage - add a button for favorite cities
+  let favorites = JSON.parse(localStorage.getItem(`favoriteCities`))
   let favCityButton = document.getElementById(`favCityButton`)
+  let arrow = document.getElementById(`arrow`)
 
+  //Dropdown button
+  arrow.addEventListener(`click`, () => {
+    favorites = JSON.parse(localStorage.getItem(`favoriteCities`))
+    })
+
+
+  //"Add City" button
   favCityButton.addEventListener(`click`, function (e) {
-    let dropdown = document.getElementById(`dropdown`)
     let searchbar = document.getElementById(`searchbar`).value
     let option = document.createElement(`a`)
-    let favorites = JSON.parse(localStorage.getItem(`favoriteCities`)) || {cities: []}
-    let city = document.getElementById(`city`)
-    
 
-    favorites.cities.push(searchbar)
+
+    let city = document.getElementById(`city`)
+    favorites = JSON.parse(localStorage.getItem(`favoriteCities`)) || []
+    
+    favorites.push(searchbar)
     localStorage.setItem(`favoriteCities`, JSON.stringify(favorites))
     dropdown.appendChild(option)
     option.classList.add(`dropdown-item`)
     
-    for (let i = 0; i < favorites.cities.length; i++) {
-      option.innerHTML = favorites.cities[i]
+    for (let i = 0; i < favorites.length; i++) {
+      option.innerHTML = `<i class="fas fa-trash" aria-hidden="true"></i> ${favorites[i]}`
     }
   })
+
 
 
   //API call for any city
   function getCall(location) {
     axios.get(`https://api.apixu.com/v1/forecast.json?key=e452323a9db841b187b164113180709&q=${location}&days=7`)
       .then((response) => updateUI(response))
+      .catch(error => {
+      console.log(error)
+      })
   }
 
 

@@ -28,7 +28,7 @@ body {
     opacity: .7;
     padding-left: 1%;
   }
-
+  
   *:focus {
     outline: none;
   }
@@ -45,12 +45,16 @@ body {
     margin-right: 50%;
   }
 
+  .fa-trash {
+    color: red;
+  }
+/* 
   .dropdown-menu{
-    /* color: white;
+    color: white;
     background-color: transparent;
     border: transparent;
-    border: none; */
-  }
+    border: none;
+  } */
 
   .fav {
     margin-top: .2em;
