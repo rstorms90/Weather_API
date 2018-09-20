@@ -201,11 +201,12 @@ document.addEventListener("DOMContentLoaded", (e) => {
     <div class="humidity">Humidity: ${humidity}%</div>`
 
 
-    // Changing weather color background (FIX THIS - Gradient as background)
+    // Changing weather color background
     let hr = document.getElementsByClassName(`hr`)[0]
     let body = document.getElementById(`background`)
 
-    let tempValue = parseInt(temp.innerHTML, 10)
+    let tempValue = fahrenheit
+
     if (tempValue >= 80) {
       body.style.backgroundImage = `-webkit-linear-gradient(left, #e58d1b, #800000)`
       hr.style.backgroundImage = `-webkit-linear-gradient(left, #e58d1b, white, #800000)`
@@ -226,9 +227,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     iconsPH.setAttribute(`src`, icon)
 
 
-    //color backgrounds not working on celsius
-
-    //local storage
+    //local storage - add a button for favorite cities
 
     //tests
 
