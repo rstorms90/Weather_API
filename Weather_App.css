@@ -41,12 +41,39 @@ body {
     background: transparent;
   }
 
+  .dropleft {
+    margin-right: 50%;
+  }
+
+  .dropdown-menu{
+    /* color: white;
+    background-color: transparent;
+    border: transparent;
+    border: none; */
+  }
+
+  .fav {
+    margin-top: .2em;
+    color: white;
+    border: none;
+    cursor: pointer;
+    background: transparent;
+  }
+
+  .arrow {
+    margin-top: .2em;
+    color: white;
+    border: none;
+    cursor: pointer;
+    background: transparent;
+  }
+
   h2 {
     font-size: 30px;
   }
 
   .location {
-    margin-top: 2em;
+    margin-top: .7em;
     margin-bottom: -.9em;
     margin-right: 10%;
     letter-spacing: .1em;
@@ -139,13 +166,13 @@ body {
   .windDirection {
     font-size: 15px;
     font-weight: lighter;
-    margin-left: 22%;
+    margin-left: 29%;
   }
 
   .humidity {
     font-size: 15px;
     font-weight: lighter;
-    margin-left: 15%;
+    margin-left: 17%;
   }
 
   .forecast {

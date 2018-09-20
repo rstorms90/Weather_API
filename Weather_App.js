@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   let degTypeF = document.getElementById(`degTypeF`)
   let degTypeC = document.getElementById(`degTypeC`)
   let temp = document.getElementById(`temp`)
+  let searchbar
 
   //Declare to search for cities
   let form = document.getElementById(`search`)
@@ -18,10 +19,33 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
 
   function submitEvent(event) {
-    let searchbar = document.getElementById(`searchbar`).value
+    searchbar = document.getElementById(`searchbar`).value
     event.preventDefault()
     getCall(searchbar)
   }
+
+
+  //Local storage - add a button for favorite cities
+  let favCityButton = document.getElementById(`favCityButton`)
+
+  favCityButton.addEventListener(`click`, function (e) {
+    let dropdown = document.getElementById(`dropdown`)
+    let searchbar = document.getElementById(`searchbar`).value
+    let option = document.createElement(`a`)
+    let favorites = JSON.parse(localStorage.getItem(`favoriteCities`)) || {cities: []}
+    let city = document.getElementById(`city`)
+    
+
+    favorites.cities.push(searchbar)
+    localStorage.setItem(`favoriteCities`, JSON.stringify(favorites))
+    dropdown.appendChild(option)
+    option.classList.add(`dropdown-item`)
+    
+    for (let i = 0; i < favorites.cities.length; i++) {
+      option.innerHTML = favorites.cities[i]
+    }
+  })
+
 
   //API call for any city
   function getCall(location) {
@@ -53,12 +77,12 @@ document.addEventListener("DOMContentLoaded", (e) => {
     degTypeC.classList.remove(`focus-tempType`)
 
     let tempElements = document.getElementsByClassName(`hi-temps`)
-    for(let i=0; i<tempElements.length; i++) {
+    for (let i = 0; i < tempElements.length; i++) {
       tempElements[i].innerText = maxF[i]
     }
 
     tempElements = document.getElementsByClassName(`low-temps`)
-    for(let i=0; i<tempElements.length; i++) {
+    for (let i = 0; i < tempElements.length; i++) {
       tempElements[i].innerText = minF[i]
     }
   })
@@ -69,12 +93,12 @@ document.addEventListener("DOMContentLoaded", (e) => {
     degTypeF.classList.remove(`focus-tempType`)
 
     let tempElements = document.getElementsByClassName(`hi-temps`)
-    for(let i=0; i<tempElements.length; i++) {
+    for (let i = 0; i < tempElements.length; i++) {
       tempElements[i].innerText = maxC[i]
     }
 
     tempElements = document.getElementsByClassName(`low-temps`)
-    for(let i=0; i<tempElements.length; i++) {
+    for (let i = 0; i < tempElements.length; i++) {
       tempElements[i].innerText = minC[i]
     }
   })
@@ -206,20 +230,18 @@ document.addEventListener("DOMContentLoaded", (e) => {
     let body = document.getElementById(`background`)
 
     let tempValue = fahrenheit
-
+    let gradColors
     if (tempValue >= 80) {
-      body.style.backgroundImage = `-webkit-linear-gradient(left, #e58d1b, #800000)`
-      hr.style.backgroundImage = `-webkit-linear-gradient(left, #e58d1b, white, #800000)`
+      gradColors = ['#e58d1b', '#800000']
     } else if (tempValue >= 70) {
-      body.style.backgroundImage = `-webkit-linear-gradient(left, #f7e00e, #e58d1b)`
-      hr.style.backgroundImage = `-webkit-linear-gradient(left, #f7e00e, white, #e58d1b)`
+      gradColors = ['#f9c920', '#e58d1b']
     } else if (tempValue >= 60) {
-      body.style.backgroundImage = `-webkit-linear-gradient(left, #0D47A1, #5a97f2)`
-      hr.style.backgroundImage = `-webkit-linear-gradient(left, #5a97f2, white, #5a97f2)`
-    } else if (tempValue <= 59) {
-      body.style.backgroundImage = `-webkit-linear-gradient(left, #072A60, #0D47A1)`
-      hr.style.backgroundImage = `-webkit-linear-gradient(left, #0D47A1, white, #0D47A1)`
+      gradColors = ['#0D47A1', '#5a97f2']
+    } else {
+      gradColors = ['#072A60', '#0D47A1']
     }
+    body.style.background = `-webkit-linear-gradient(left, ${gradColors[0]}, ${gradColors[1]})`
+    hr.style.background = `-webkit-linear-gradient(left, ${gradColors[0]}, white, ${gradColors[1]})`
 
     //Changing weather pictures
     let icon = response2.data.current.condition.icon
@@ -227,7 +249,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     iconsPH.setAttribute(`src`, icon)
 
 
-    //local storage - add a button for favorite cities
+
 
     //tests
 
