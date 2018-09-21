@@ -41,36 +41,60 @@ body {
     background: transparent;
   }
 
+  .go:hover {
+    color: rgba(255, 255, 255, .4);
+  }
+
   .dropleft {
     margin-right: 50%;
   }
 
   .fa-trash {
-    color: red;
+    color: rgb(190, 7, 7);
   }
-/* 
-  .dropdown-menu{
-    color: white;
-    background-color: transparent;
-    border: transparent;
-    border: none;
-  } */
+
+  button.fav:focus {
+    outline: none;
+  }
 
   .fav {
     margin-top: .2em;
+    margin-left: -.5em;
     color: white;
     border: none;
     cursor: pointer;
     background: transparent;
+  }
+
+  .fav:hover {
+    color: rgba(255, 255, 255, .4);
   }
 
   .arrow {
     margin-top: .2em;
+    font-size: 1em;
     color: white;
     border: none;
     cursor: pointer;
-    background: transparent;
+    background-color: transparent;
   }
+
+  .arrow:focus {
+    outline: none;
+  }
+
+  .arrow:hover {
+    color: rgba(255, 255, 255, .4);
+  }
+/* 
+  .dropdown-menu {
+    background-color: transparent;
+    border: none;
+  } */
+
+  /* .dropdown-item {
+    color: white;
+  } */
 
   h2 {
     font-size: 30px;

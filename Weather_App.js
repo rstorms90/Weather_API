@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
       dropdown.innerHTML += option
     }
   }
-
+  //Dropdown arrow menu - local storage
   dropdown.addEventListener(`click`, (event) => {
     document.getElementById(`searchbar`).value = ``
     if (event.target.classList.contains(`delete`)) {
@@ -69,17 +69,20 @@ document.addEventListener("DOMContentLoaded", (e) => {
     let searchbar = document.getElementById(`searchbar`).value
     let option = document.createElement(`a`)
 
-
-    let city = document.getElementById(`city`)
-    favorites = JSON.parse(localStorage.getItem(`favoriteCities`)) || []
-    
-    favorites.push(searchbar)
-    localStorage.setItem(`favoriteCities`, JSON.stringify(favorites))
-    dropdown.appendChild(option)
-    option.classList.add(`dropdown-item`)
-    
-    for (let i = 0; i < favorites.length; i++) {
-      option.innerHTML = `<i class="fas fa-trash delete" aria-hidden="true"></i> ${favorites[i]}`
+    if (!searchbar) {
+      alert(`You need a city to save!`)
+    } else {
+      let city = document.getElementById(`city`)
+      favorites = JSON.parse(localStorage.getItem(`favoriteCities`)) || []
+      
+      favorites.push(searchbar)
+      localStorage.setItem(`favoriteCities`, JSON.stringify(favorites))
+      dropdown.appendChild(option)
+      option.classList.add(`dropdown-item`)
+      
+      for (let i = 0; i < favorites.length; i++) {
+        option.innerHTML = `<i class="fas fa-trash delete" aria-hidden="true"></i> ${favorites[i]}`
+    }
     }
   })
 

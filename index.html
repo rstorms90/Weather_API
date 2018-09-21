@@ -17,7 +17,7 @@
       <div class="col-12">
         <search>
           <form class="search" id="search">
-            <input class='searchbar transparent' id='searchbar' type='text' required placeholder='ENTER CITY, COUNTRY' />
+            <input class='searchbar transparent' id='searchbar' type='text' autocomplete="off" required placeholder='ENTER CITY, COUNTRY' />
             <input class='button go' id='go' type="submit" value='GO' />
           </form>
         </search>
@@ -50,9 +50,9 @@
       <p class="currentTemp" id="temp"></p>
     </div>
     <div class="col-2 tempType">
-      <a class="btn btn-default btn-sm" href="#" role="button" id="degTypeF"></a>
+      <a class="btn btn-default btn-sm degTypes" href="#" role="button" id="degTypeF"></a>
       <span class="divider off">|</span>
-      <a class="btn btn-default btn-sm" href="#" role="button" id="degTypeC"></a>
+      <a class="btn btn-default btn-sm degTypes" href="#" role="button" id="degTypeC"></a>
     </div>
     <div class="col-3 conditions" id="conditions"></div>
   </div>
