@@ -12,14 +12,14 @@ document.addEventListener("DOMContentLoaded", (e) => {
       dropdown.innerHTML += option
     }
   }
-  //Dropdown arrow menu - local storage
+  //Dropdown arrow menu - local storage - BUG (line 18 contains(`delete`) deletes all favs when page reloaded)
   dropdown.addEventListener(`click`, (event) => {
     document.getElementById(`searchbar`).value = ``
     if (event.target.classList.contains(`delete`)) {
       let arrOfCities = JSON.parse(localStorage.getItem(`favoriteCities`))
       let deleteInd = arrOfCities.indexOf(event.target.parentNode.id)
-      let slicedCity = arrOfCities.splice(deleteInd, 0)
-      localStorage.setItem(`favoriteCities`, JSON.stringify(slicedCity))
+      let trash = arrOfCities.splice(deleteInd, 1)
+      localStorage.setItem(`favoriteCities`, JSON.stringify(arrOfCities))
 
       dropdown.removeChild(event.target.parentNode)
     } else {
@@ -251,7 +251,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
         lowTemp.innerText = minC[i]
       }
       lowRow.appendChild(lowTemp)
-
     }
 
 
