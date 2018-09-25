@@ -96,6 +96,9 @@ document.addEventListener("DOMContentLoaded", (e) => {
       .then((response) => updateUI(response))
       .catch(error => {
       console.log(error)
+      if (error.response.status === 400) {
+        alert(`City not found. Try again!`)
+      }
       })
   }
 
@@ -296,14 +299,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
     //tests
 
-  //You still have a few bugs you should fix relating to the Add City button.
-
-// If I misspell a city’s name into the search box and hit GO,
-//  it would be nice to know if the search did not find anything or if the app is broken. 
-//  Currently, if a city name does not yield any results, nothing happens. Let’s say I 
-//  had already performed a search on a valid city and it shows the new city and then I 
-//  type in a city which has no results, the last city still shows. I suggest adding an
-//  alert when a search does not yield a result.
+//You still have a few bugs you should fix relating to the Add City button.
 
 // If the user happens to enter a Zip Code instead of a city name, the 
 // correct city’s weather information shows, but it defaults to Celsius (Metric) 
