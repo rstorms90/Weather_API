@@ -12,7 +12,8 @@ document.addEventListener("DOMContentLoaded", (e) => {
       dropdown.innerHTML += option
     }
   }
-  //Dropdown arrow menu - local storage - BUG (line 18 contains(`delete`) deletes all favs when page reloaded)
+
+  //Dropdown arrow menu - local storage
   dropdown.addEventListener(`click`, (event) => {
     document.getElementById(`searchbar`).value = ``
     if (event.target.classList.contains(`delete`)) {
@@ -38,6 +39,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   let degTypeF = document.getElementById(`degTypeF`)
   let degTypeC = document.getElementById(`degTypeC`)
   let temp = document.getElementById(`temp`)
+  let location = document.getElementById(`location`)
   
 
   //Declare to search for cities
@@ -69,28 +71,28 @@ document.addEventListener("DOMContentLoaded", (e) => {
     let searchbar = document.getElementById(`searchbar`).value
     let option = document.createElement(`a`)
 
-    if (!searchbar) {
-      alert(`You need a city to save!`)
-    } else {
       let city = document.getElementById(`city`)
       favorites = JSON.parse(localStorage.getItem(`favoriteCities`)) || []
       
-      favorites.push(searchbar)
-      localStorage.setItem(`favoriteCities`, JSON.stringify(favorites))
-      dropdown.appendChild(option)
-      option.classList.add(`dropdown-item`)
-      
-      for (let i = 0; i < favorites.length; i++) {
-        option.innerHTML = `<i class="fas fa-trash delete" aria-hidden="true"></i> ${favorites[i]}`
-    }
-    }
+      if (favorites.indexOf(location.innerText) === -1) {
+        favorites.push(location.innerText)
+        localStorage.setItem(`favoriteCities`, JSON.stringify(favorites))
+        dropdown.appendChild(option)
+        option.classList.add(`dropdown-item`)
+        
+        for (let i = 0; i < favorites.length; i++) {
+          option.innerHTML = `<i class="fas fa-trash delete" aria-hidden="true"></i> ${favorites[i]}`
+      }
+        
+      } else {
+        alert(`This city is in your favorites!`)
+      }
   })
-
 
 
   //API call for any city
   function getCall(location) {
-    axios.get(`https://api.apixu.com/v1/forecast.json?key=e452323a9db841b187b164113180709&q=${location}&days=7`)
+    axios.get(`https://api.apixu.com/v1/forecast.json?key=bef89cdff8d8407684220054182409&q=${location}&days=7`)
       .then((response) => updateUI(response))
       .catch(error => {
       console.log(error)
@@ -107,7 +109,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
         let long = coords[1]
 
         //API for JSON object containing user's current weather data
-        let api = `https://api.apixu.com/v1/forecast.json?key=e452323a9db841b187b164113180709&q=` + lat + `,` + long + `&days=7`
+        let api = `https://api.apixu.com/v1/forecast.json?key=bef89cdff8d8407684220054182409&q=` + lat + `,` + long + `&days=7`
 
         axios.get(api)
           .then(e => updateUI(e))
@@ -181,7 +183,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
 
     //Append current location
-    let location = document.getElementById(`location`)
     if (country === `United States of America`) {
       country = `US`
       //Set default to fahrenheit, gray out celsius
@@ -293,8 +294,27 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
 
 
-
     //tests
+
+  //You still have a few bugs you should fix relating to the Add City button.
+
+// If I misspell a city’s name into the search box and hit GO,
+//  it would be nice to know if the search did not find anything or if the app is broken. 
+//  Currently, if a city name does not yield any results, nothing happens. Let’s say I 
+//  had already performed a search on a valid city and it shows the new city and then I 
+//  type in a city which has no results, the last city still shows. I suggest adding an
+//  alert when a search does not yield a result.
+
+// If the user happens to enter a Zip Code instead of a city name, the 
+// correct city’s weather information shows, but it defaults to Celsius (Metric) 
+// regardless if the city is in the USA or not.
+
+// Other bugs I notice in other parts of your app:
+
+// You still only show mph for the Wind speed regardless if the temperature is showing in Celsius
+
+// When I shrink the browser width a bit, I see the following. 
+// You definitely need to try to make the page more responsive for smaller screens.
 
   }
 })
