@@ -294,23 +294,5 @@ document.addEventListener("DOMContentLoaded", (e) => {
     let icon = response2.data.current.condition.icon
     let iconsPH = document.getElementById(`icons`)
     iconsPH.setAttribute(`src`, icon)
-
-
-
-    //tests
-
-//You still have a few bugs you should fix relating to the Add City button.
-
-// If the user happens to enter a Zip Code instead of a city name, the 
-// correct city’s weather information shows, but it defaults to Celsius (Metric) 
-// regardless if the city is in the USA or not.
-
-// Other bugs I notice in other parts of your app:
-
-// You still only show mph for the Wind speed regardless if the temperature is showing in Celsius
-
-// When I shrink the browser width a bit, I see the following. 
-// You definitely need to try to make the page more responsive for smaller screens.
-
   }
 })
