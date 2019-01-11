@@ -1,3 +1,5 @@
+//// ON DOCUMENT READY \\\\
+
 document.addEventListener("DOMContentLoaded", (e) => {
 
   let searchbar = document.getElementById(`searchbar`)
@@ -13,7 +15,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     }
   }
 
-  //Dropdown arrow menu - local storage
+  //// DROPDOWN ARROW MENU - LOCAL STORAGE \\\\
   dropdown.addEventListener(`click`, (event) => {
     document.getElementById(`searchbar`).value = ``
     if (event.target.classList.contains(`delete`)) {
@@ -30,6 +32,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
   getLocalWeather()
 
+  //// VARIABLES FOR WEATHER INFO \\\\
   let maxF
   let minF
   let maxC
@@ -42,7 +45,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   let location = document.getElementById(`location`)
   
 
-  //Declare to search for cities
+  //// FORM TO SEARCH CITIES \\\\
   let form = document.getElementById(`search`)
 
   form.addEventListener(`submit`, submitEvent)
@@ -55,18 +58,18 @@ document.addEventListener("DOMContentLoaded", (e) => {
   }
 
 
-  //Local storage - add a button for favorite cities
+  //// LOCAL STORAGE - ADD A BUTTON FOR FAVORITE CITIES \\\\
   let favorites = JSON.parse(localStorage.getItem(`favoriteCities`))
   let favCityButton = document.getElementById(`favCityButton`)
   let arrow = document.getElementById(`arrow`)
 
-  //Dropdown button
+  //// DROPDOWN BUTTON \\\\
   arrow.addEventListener(`click`, () => {
     favorites = JSON.parse(localStorage.getItem(`favoriteCities`))
     })
 
 
-  //"Add City" button
+  //// "ADD CITY" BUTTON \\\\
   favCityButton.addEventListener(`click`, function (e) {
     let searchbar = document.getElementById(`searchbar`).value
     let option = document.createElement(`a`)
@@ -90,7 +93,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   })
 
 
-  //API call for any city
+  //// API CALL FOR ANY CITY \\\\
   function getCall(location) {
     axios.get(`https://api.apixu.com/v1/forecast.json?key=bef89cdff8d8407684220054182409&q=${location}&days=7`)
       .then((response) => updateUI(response))
@@ -104,14 +107,14 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
 
   function getLocalWeather() {
-    //Grab user coordinates
+    //// GRAB USER COORDINATES \\\\
     axios.get(`https://ipinfo.io`)
       .then(e => {
         let coords = e.data.loc.split(`,`)
         let lat = coords[0]
         let long = coords[1]
 
-        //API for JSON object containing user's current weather data
+        //// API FOR JSON OBJECT CONTAINING USER'S CURRENT WEATHER DATA \\\\
         let api = `https://api.apixu.com/v1/forecast.json?key=bef89cdff8d8407684220054182409&q=` + lat + `,` + long + `&days=7`
 
         axios.get(api)
@@ -119,7 +122,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
       })
   }
 
-  // Toggle ºC & ºF (buttons)
+  //// TOGGLE ºC & ºF (BUTTONS)
   degTypeF.addEventListener(`click`, function (e) {
     temp.innerText = fahrenheit + `º`
     degTypeF.classList.add(`focus-tempType`)
@@ -178,17 +181,18 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
 
 
-    // Declare temp variables
+    //// DECLARE TEMP VARIABLES \\\\
     fahrenheit = Math.round(response2.data.current.temp_f)
     celsius = Math.round(response2.data.current.temp_c)
     degTypeF.innerText = `ºF`
     degTypeC.innerText = `ºC`
 
 
-    //Append current location
+    //// APPEND CURRENT LOCATION
     if (country === `United States of America`) {
       country = `US`
-      //Set default to fahrenheit, gray out celsius
+      
+      //// SET DEFAULT TO FAHRENHEIT, GRAY OUT CELSIUS \\\\
       temp.innerText = fahrenheit + `º`
       degTypeF.classList.add(`focus-tempType`)
       degTypeC.classList.remove(`focus-tempType`)
@@ -201,24 +205,24 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
 
 
-    //Change dates to corresponding days
+    //// CHANGE DATES TO CORRESPONDING DAYS \\\\
     let daysOfWeek = [`Mon`, `Tue`, `Wed`, `Thu`, `Fri`, `Sat`, `Sun`]
 
-    //Append 6 day forecast weather
+    ////APPEND 6 DAY FORECAST WEATHER \\\\
     let forecastRow = document.getElementById(`forecast`)
     let forecastCol = document.getElementById(`col`)
     let forecast = response2.data.forecast.forecastday.slice(1)
     let highRow = document.getElementById(`highRow`)
     let lowRow = document.getElementById(`lowRow`)
 
-    // Clear out min/maxes
+    //// CLEAR OUT MIN/MAX TEMPERATURES \\\\
     maxF = []
     minF = []
     maxC = []
     minC = []
 
 
-    //Loop through forecast days and set to bottom 
+    //// LOOP THROUGH FORECAST DAYS AND SET TO BOTTOM \\\\
     for (let i = 0; i < forecast.length; i++) {
       let date = forecast[i].date
       let day = document.createElement(`div`)
@@ -228,7 +232,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
       let dayName = dayInfo.getDay()
       day.innerText = daysOfWeek[dayName]
 
-      //Set highs and lows for each forecast
+      //// SET HIGHS AND LOWS FOR EACH FORECAST \\\\
       maxF.push(Math.round(forecast[i].day.maxtemp_f))
       minF.push(Math.round(forecast[i].day.mintemp_f))
       maxC.push(Math.round(forecast[i].day.maxtemp_c))
@@ -237,7 +241,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
       let hiTemp = document.createElement(`div`)
       let lowTemp = document.createElement(`div`)
 
-      //Forecast high temps
+      //// FORECAST HIGH TEMPS \\\\
       hiTemp.setAttribute(`class`, `col-md-2 hi-temps`)
       if (country === `US`) {
         hiTemp.innerText = maxF[i]
@@ -247,7 +251,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
       highRow.appendChild(hiTemp)
 
 
-      //Forecast low temps
+      //// FORECAST LOW TEMPS \\\\
       lowTemp.setAttribute(`class`, `col-md-2 low-temps`)
       if (country === `US`) {
         lowTemp.innerText = minF[i]
@@ -258,7 +262,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     }
 
 
-    //Append conditions
+    //// APPEND CONDITIONS \\\\
     let todaysDate = response2.data.forecast.forecastday[0].date
     let today = new Date(todaysDate) //Current Day
     let todaysName = today.getDay()
@@ -272,7 +276,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     <div class="humidity">Humidity: ${humidity}%</div>`
 
 
-    // Changing weather color background
+    //// CHANGING WEATHER COLOR BACKGROUND \\\\
     let hr = document.getElementsByClassName(`hr`)[0]
     let body = document.getElementById(`background`)
 
@@ -290,7 +294,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     body.style.background = `-webkit-linear-gradient(left, ${gradColors[0]}, ${gradColors[1]})`
     hr.style.background = `-webkit-linear-gradient(left, ${gradColors[0]}, white, ${gradColors[1]})`
 
-    //Changing weather pictures
+    //// CHANGING WEATHER PICTURES \\\\
     let icon = response2.data.current.condition.icon
     let iconsPH = document.getElementById(`icons`)
     iconsPH.setAttribute(`src`, icon)
