@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
         let long = coords[1]
 
         //// API FOR JSON OBJECT CONTAINING USER'S CURRENT WEATHER DATA \\\\
-        let api = `https://api.apixu.com/v1/forecast.json?key=bef89cdff8d8407684220054182409&q=` + lat + `,` + long + `&days=7`
+        let api = `${API}` + lat + `,` + long + `&days=7`
 
         axios.get(api)
           .then(e => updateUI(e))
