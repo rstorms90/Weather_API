@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
   //// API CALL FOR ANY CITY \\\\
   function getCall(location) {
-    axios.get(`https://api.apixu.com/v1/forecast.json?key=bef89cdff8d8407684220054182409&q=${location}&days=7`)
+    axios.get(`${API}${location}&days=7`)
       .then((response) => updateUI(response))
       .catch(error => {
       console.log(error)
